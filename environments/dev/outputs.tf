@@ -16,3 +16,8 @@ output "private_route_table_id" {
   description = "ID of the Dev private route table"
   value       = module.subnet.route_table_id
 }
+
+output "security_group_id" {
+  description = "ID of the Dev EC2 security group"
+  value       = module.security_group.security_group_id
+}
