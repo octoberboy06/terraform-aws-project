@@ -21,3 +21,13 @@ output "security_group_id" {
   description = "ID of the Dev EC2 security group"
   value       = module.security_group.security_group_id
 }
+
+output "ec2_instance_ids" {
+  description = "IDs of the Dev EC2 instances"
+  value       = module.ec2.instance_ids
+}
+
+output "ec2_private_ips" {
+  description = "Private IP addresses of the Dev EC2 instances"
+  value       = module.ec2.private_ips
+}

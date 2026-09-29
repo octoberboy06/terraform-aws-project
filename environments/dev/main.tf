@@ -53,3 +53,49 @@ module "security_group" {
     ManagedBy   = "Terraform"
   }
 }
+
+data "aws_ami" "amazon_linux" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["al2023-ami-2023.*-x86_64"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+}
+
+module "ec2" {
+  source = "../../modules/ec2"
+
+  ami_id        = data.aws_ami.amazon_linux.id
+  instance_type = "t3.micro"
+
+  subnet_ids = module.subnet.subnet_ids
+
+  security_group_ids = [
+    module.security_group.security_group_id
+  ]
+
+  name = "${var.project_name}-${var.environment}-ec2"
+
+  tags = {
+    Project     = var.project_name
+    Environment = var.environment
+    ManagedBy   = "Terraform"
+  }
+}
