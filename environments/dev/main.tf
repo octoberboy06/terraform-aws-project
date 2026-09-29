@@ -38,3 +38,18 @@ module "subnet" {
     ManagedBy   = "Terraform"
   }
 }
+module "security_group" {
+  source = "../../modules/security-group"
+
+  name        = "${var.project_name}-${var.environment}-sg"
+  description = "Security group for Dev EC2 instances"
+
+  vpc_id   = module.vpc.vpc_id
+  vpc_cidr = module.vpc.vpc_cidr
+
+  tags = {
+    Project     = var.project_name
+    Environment = var.environment
+    ManagedBy   = "Terraform"
+  }
+}
