@@ -12,46 +12,37 @@ permissions:
   id-token: write
   contents: read
 
-env:
-  AWS_REGION: ap-south-1
-  TF_WORKING_DIR: environments/dev
-
-  TF_VAR_aws_region: ap-south-1
-  TF_VAR_vpc_cidr: 10.0.0.0/16
-  TF_VAR_project_name: terraform-project
-  TF_VAR_environment: dev
 
 jobs:
   terraform-destroy:
-    if: github.ref == 'refs/heads/main' && inputs.confirm == 'DESTROY'
-
+    if: ${{ inputs.confirm == 'DESTROY'}}
     runs-on: ubuntu-latest
 
     defaults:
       run:
-        working-directory: ${{ env.TF_WORKING_DIR }}
+        working-directory: environments/dev
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::565828850402:role/github-actions-terraform-dev
+          aws-region: ap-south-1
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Configure AWS Credentials - Apply Role
-        uses: aws-actions/configure-aws-credentials@v5
-        with:
-          role-to-assume: ${{ vars.AWS_TERRAFORM_APPLY_ROLE_ARN }}
-          aws-region: ${{ env.AWS_REGION }}
-
       - name: Terraform Init
-        run: terraform init -backend-config="bucket=${{ vars.TF_STATE_BUCKET }}"
+        run: terraform init
 
       - name: Terraform Validate
         run: terraform validate
 
-      - name: Terraform Destroy Plan
+      - name: Terraform Plan
         run: terraform plan -destroy
 
-      - name: Terraform Destroy
+      - name: Terraform Apply
         run: terraform destroy -auto-approve
