@@ -5,7 +5,7 @@ output "subnet_ids" {
     name => subnet.id
   }
 }
- 
+
 output "subnet_availability_zones" {
   description = "Map of subnet names to availability zones"
 
@@ -14,7 +14,7 @@ output "subnet_availability_zones" {
     name => subnet.availability_zone
   }
 }
- 
+
 output "subnet_details" {
   description = "Details of all created subnets"
 
