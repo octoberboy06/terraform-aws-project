@@ -9,7 +9,7 @@ output "vpc_cidr" {
 }
 output "private_subnet_ids" {
   description = "IDs of the Dev private subnets"
-  value       = module.subnet.subnet_id
+  value       = module.subnet.subnet_ids
 }
 
 output "private_route_table_id" {

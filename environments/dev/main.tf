@@ -43,7 +43,7 @@ module "ec2" {
   ami_id        = var.ami_id
   instance_type = var.instance_type
 
-  subnet_id = module.subnet.subnet_id
+  subnet_id = module.subnet.subnet_ids["private-a"]
 
   security_group_ids = [
     module.security_group.security_group_id
