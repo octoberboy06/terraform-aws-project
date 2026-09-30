@@ -22,12 +22,12 @@ output "security_group_id" {
   value       = module.security_group.security_group_id
 }
 
-output "ec2_instance_ids" {
+output "ec2_instance_id" {
   description = "IDs of the Dev EC2 instances"
-  value       = module.ec2.instance_ids
+  value       = module.ec2.instance_id
 }
 
-output "ec2_private_ips" {
+output "ec2_private_ip" {
   description = "Private IP addresses of the Dev EC2 instances"
-  value       = module.ec2.private_ips
+  value       = module.ec2.private_ip
 }
