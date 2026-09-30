@@ -18,7 +18,7 @@ resource "aws_instance" "this" {
   tags = merge(
     var.tags,
     {
-      Name = "${var.name}-${count.index + 1}"
+      Name = var.name
     }
   )
 }
