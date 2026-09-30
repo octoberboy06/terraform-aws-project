@@ -10,34 +10,15 @@ module "vpc" {
     ManagedBy   = "Terraform"
   }
 }
-data "aws_availability_zones" "available" {
-  state = "available"
-}
 
 module "subnet" {
   source = "../../modules/subnet"
 
-  vpc_id = module.vpc.vpc_id
+  vpc_id  = module.vpc.vpc_id
+  subnets = var.subnets
 
-  subnet_cidrs = [
-    "10.0.1.0/24",
-    "10.0.2.0/24"
-  ]
-
-  availability_zones = slice(
-    data.aws_availability_zones.available.names,
-    0,
-    2
-  )
-
-  name = "${var.project_name}-${var.environment}-private-subnet"
-
-  tags = {
-    Project     = var.project_name
-    Environment = var.environment
-    ManagedBy   = "Terraform"
-  }
 }
+
 module "security_group" {
   source = "../../modules/security-group"
 
@@ -54,38 +35,15 @@ module "security_group" {
   }
 }
 
-data "aws_ami" "amazon_linux" {
-  most_recent = true
-  owners      = ["amazon"]
 
-  filter {
-    name   = "name"
-    values = ["al2023-ami-2023.*-x86_64"]
-  }
-
-  filter {
-    name   = "architecture"
-    values = ["x86_64"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  filter {
-    name   = "root-device-type"
-    values = ["ebs"]
-  }
-}
 
 module "ec2" {
   source = "../../modules/ec2"
 
-  ami_id        = data.aws_ami.amazon_linux.id
-  instance_type = "t3.micro"
+  ami_id        = var.ami_id
+  instance_type = var.instance_type
 
-  subnet_ids = module.subnet.subnet_ids
+  subnet_id = module.subnet.subnet_ids["private-a"]
 
   security_group_ids = [
     module.security_group.security_group_id

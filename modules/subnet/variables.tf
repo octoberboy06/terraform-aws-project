@@ -1,25 +1,13 @@
 variable "vpc_id" {
-  description = "ID of the VPC"
+  description = "ID of the VPC where the subnets will be created"
   type        = string
 }
 
-variable "subnet_cidrs" {
-  description = "CIDR blocks for the private subnets"
-  type        = list(string)
+variable "subnets" {
+  description = "Configuration of subnets to create"
+  type = map(object({
+    cidr_block        = string
+    availability_zone = string
+  }))
 }
-
-variable "availability_zones" {
-  description = "Availability Zones for the private subnets"
-  type        = list(string)
-}
-
-variable "name" {
-  description = "Name prefix for subnet resources"
-  type        = string
-}
-
-variable "tags" {
-  description = "Additional tags"
-  type        = map(string)
-  default     = {}
-}
+ 

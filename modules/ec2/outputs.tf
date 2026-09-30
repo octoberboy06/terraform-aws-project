@@ -1,9 +1,9 @@
-output "instance_ids" {
+output "instance_id" {
   description = "IDs of the EC2 instances"
-  value       = aws_instance.this[*].id
+  value       = aws_instance.this.id
 }
 
-output "private_ips" {
+output "private_ip" {
   description = "Private IP addresses of the EC2 instances"
-  value       = aws_instance.this[*].private_ip
+  value       = aws_instance.this.private_ip
 }

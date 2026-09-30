@@ -9,9 +9,9 @@ variable "instance_type" {
   default     = "t3.micro"
 }
 
-variable "subnet_ids" {
+variable "subnet_id" {
   description = "Subnet IDs where EC2 instances will be deployed"
-  type        = list(string)
+  type        = string
 }
 
 variable "security_group_ids" {
