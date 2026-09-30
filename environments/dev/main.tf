@@ -37,7 +37,7 @@ module "security_group" {
 
 
 
-module "ec2" {
+module "ec2 1" {
   source = "../../modules/ec2"
 
   ami_id        = var.ami_id
@@ -59,7 +59,7 @@ module "ec2" {
 }
 
 
-module "ec2" {
+module "ec2 2" {
   source = "../../modules/ec2"
 
   ami_id        = var.ami_id
