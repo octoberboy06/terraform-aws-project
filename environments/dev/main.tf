@@ -57,3 +57,25 @@ module "ec2" {
     ManagedBy   = "Terraform"
   }
 }
+
+
+module "ec2" {
+  source = "../../modules/ec2"
+
+  ami_id        = var.ami_id
+  instance_type = var.instance_type
+
+  subnet_id = module.subnet.subnet_ids["private-b"]
+
+  security_group_ids = [
+    module.security_group.security_group_id
+  ]
+
+  name = "${var.project_name}-${var.environment}-ec2"
+
+  tags = {
+    Project     = var.project_name
+    Environment = var.environment
+    ManagedBy   = "Terraform"
+  }
+}
