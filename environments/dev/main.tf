@@ -49,7 +49,7 @@ module "ec2_1" {
     module.security_group.security_group_id
   ]
 
-  name = "${var.project_name}-${var.environment}-ec2"
+  name = "db instance-ec2"
 
   tags = {
     Project     = var.project_name
@@ -71,7 +71,7 @@ module "ec2_2" {
     module.security_group.security_group_id
   ]
 
-  name = "${var.project_name}-${var.environment}-ec2"
+  name = "db instance-ec2"
 
   tags = {
     Project     = var.project_name
