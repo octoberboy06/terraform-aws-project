@@ -24,16 +24,6 @@ variable "project_name" {
   type        = string
 }
 
-variable "ami_id" {
-  description = "AMI Id for the instance"
-  type        = string
-}
-
-variable "instance_type" {
-  description = "AMI Id for the instance"
-  type        = string
-}
-
 variable "environment" {
   description = "Environment name"
   type        = string
