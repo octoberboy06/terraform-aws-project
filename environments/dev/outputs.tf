@@ -18,9 +18,19 @@ output "subnet_details" {
   value       = module.subnet.subnet_details
 }
 
-output "security_group_id" {
-  description = "ID of the Dev security group"
-  value       = module.security_group.security_group_id
+output "alb_security_group_id" {
+  description = "ID of the ALB security group"
+  value       = module.security_group.alb_security_group_id
+}
+
+output "app_security_group_id" {
+  description = "ID of the application security group"
+  value       = module.security_group.app_security_group_id
+}
+
+output "db_security_group_id" {
+  description = "ID of the database security group"
+  value       = module.security_group.db_security_group_id
 }
 
 output "internet_gateway_id" {
