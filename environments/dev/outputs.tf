@@ -52,3 +52,13 @@ output "db_route_table_id" {
   description = "ID of the Dev database route table"
   value       = module.routing.db_route_table_id
 }
+
+output "ec2_iam_role_name" {
+  description = "Name of the Dev EC2 IAM role"
+  value       = module.iam.ec2_role_name
+}
+
+output "ec2_instance_profile_name" {
+  description = "Name of the Dev EC2 instance profile"
+  value       = module.iam.ec2_instance_profile_name
+}
