@@ -14,8 +14,9 @@ module "vpc" {
 module "subnet" {
   source = "../../modules/subnet"
 
-  vpc_id  = module.vpc.vpc_id
-  subnets = var.subnets
+  vpc_id      = module.vpc.vpc_id
+  environment = var.environment
+  subnets     = var.subnets
 
 }
 
@@ -27,51 +28,6 @@ module "security_group" {
 
   vpc_id   = module.vpc.vpc_id
   vpc_cidr = module.vpc.vpc_cidr
-
-  tags = {
-    Project     = var.project_name
-    Environment = var.environment
-    ManagedBy   = "Terraform"
-  }
-}
-
-
-
-module "ec2_1" {
-  source = "../../modules/ec2"
-
-  ami_id        = var.ami_id
-  instance_type = var.instance_type
-
-  subnet_id = module.subnet.subnet_ids["private-a"]
-
-  security_group_ids = [
-    module.security_group.security_group_id
-  ]
-
-  name = "db instance-ec2"
-
-  tags = {
-    Project     = var.project_name
-    Environment = var.environment
-    ManagedBy   = "Terraform"
-  }
-}
-
-
-module "ec2_2" {
-  source = "../../modules/ec2"
-
-  ami_id        = var.ami_id
-  instance_type = var.instance_type
-
-  subnet_id = module.subnet.subnet_ids["private-b"]
-
-  security_group_ids = [
-    module.security_group.security_group_id
-  ]
-
-  name = "db instance-ec2"
 
   tags = {
     Project     = var.project_name

@@ -1,5 +1,6 @@
 output "subnet_ids" {
   description = "Map of subnet names to their IDs"
+
   value = {
     for name, subnet in aws_subnet.this :
     name => subnet.id
@@ -24,12 +25,7 @@ output "subnet_details" {
       id                = subnet.id
       cidr_block        = subnet.cidr_block
       availability_zone = subnet.availability_zone
+      tier              = var.subnets[name].tier
     }
   }
 }
-
-output "route_table_id" {
-  description = "ID of the Dev private route table"
-  value       = aws_route_table.this.id
-}
- 

@@ -10,24 +10,17 @@ variable "vpc_cidr" {
 
 variable "subnets" {
   description = "Configuration of subnets to create"
+
   type = map(object({
     cidr_block        = string
     availability_zone = string
+    tier              = string
+    tags              = optional(map(string), {})
   }))
 }
 
 variable "project_name" {
   description = "Project name"
-  type        = string
-}
-
-variable "ami_id" {
-  description = "AMI Id for the instance"
-  type        = string
-}
-
-variable "instance_type" {
-  description = "AMI Id for the instance"
   type        = string
 }
 

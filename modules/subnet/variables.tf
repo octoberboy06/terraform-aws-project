@@ -3,11 +3,17 @@ variable "vpc_id" {
   type        = string
 }
 
+variable "environment" {
+  description = "Environment name"
+  type        = string
+}
+
 variable "subnets" {
-  description = "Configuration of subnets to create"
+  description = "Subnet configuration"
   type = map(object({
     cidr_block        = string
     availability_zone = string
+    tier              = string
+    tags              = optional(map(string), {})
   }))
 }
- 
