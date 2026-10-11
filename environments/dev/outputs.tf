@@ -22,3 +22,8 @@ output "security_group_id" {
   description = "ID of the Dev security group"
   value       = module.security_group.security_group_id
 }
+
+output "internet_gateway_id" {
+  description = "ID of the Dev Internet Gateway"
+  value       = module.vpc.internet_gateway_id
+}
