@@ -56,3 +56,16 @@ module "security_group" {
   app_port = 80
   db_port  = 3306
 }
+
+
+module "iam" {
+  source = "../../modules/iam"
+
+  role_name = "${var.project_name}-${var.environment}-ec2-role"
+
+  tags = {
+    Project     = var.project_name
+    Environment = var.environment
+    ManagedBy   = "Terraform"
+  }
+}
