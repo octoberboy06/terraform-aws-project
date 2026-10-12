@@ -62,3 +62,18 @@ output "ec2_instance_profile_name" {
   description = "Name of the Dev EC2 instance profile"
   value       = module.iam.ec2_instance_profile_name
 }
+
+output "public_nacl_id" {
+  description = "ID of the Dev public Network ACL"
+  value       = module.nacl.public_nacl_id
+}
+
+output "app_nacl_id" {
+  description = "ID of the Dev application Network ACL"
+  value       = module.nacl.app_nacl_id
+}
+
+output "db_nacl_id" {
+  description = "ID of the Dev database Network ACL"
+  value       = module.nacl.db_nacl_id
+}
