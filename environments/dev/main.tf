@@ -69,3 +69,27 @@ module "iam" {
     ManagedBy   = "Terraform"
   }
 }
+
+module "nacl" {
+  source = "../../modules/nacl"
+
+  vpc_id = module.vpc.vpc_id
+
+  public_subnet_ids = {
+    public-a = module.subnet.subnet_ids["public-a"]
+    public-b = module.subnet.subnet_ids["public-b"]
+  }
+
+  app_subnet_ids = {
+    app-a = module.subnet.subnet_ids["app-a"]
+    app-b = module.subnet.subnet_ids["app-b"]
+  }
+
+  db_subnet_ids = {
+    db-a = module.subnet.subnet_ids["db-a"]
+    db-b = module.subnet.subnet_ids["db-b"]
+  }
+
+  project_name = var.project_name
+  environment  = var.environment
+}
