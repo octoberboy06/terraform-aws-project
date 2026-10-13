@@ -95,6 +95,7 @@ module "nacl" {
 }
 
 module "alb" {
+  count  = var.enable_alb ? 1 : 0
   source = "../../modules/alb"
 
   vpc_id = module.vpc.vpc_id
