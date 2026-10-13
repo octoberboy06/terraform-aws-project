@@ -28,3 +28,9 @@ variable "environment" {
   description = "Environment name"
   type        = string
 }
+
+variable "enable_alb" {
+  description = "Controls whether the Application Load Balancer is created"
+  type        = bool
+  default     = false
+}

@@ -80,15 +80,15 @@ output "db_nacl_id" {
 
 output "alb_dns_name" {
   description = "DNS name of the Application Load Balancer"
-  value       = module.alb.alb_dns_name
+  value       = var.enable_alb ? module.alb[0].alb_dns_name : null
 }
 
 output "alb_arn" {
   description = "ARN of the Application Load Balancer"
-  value       = module.alb.alb_arn
+  value       = var.enable_alb ? module.alb[0].alb_arn : null
 }
 
 output "alb_target_group_arn" {
   description = "ARN of the ALB target group"
-  value       = module.alb.target_group_arn
+  value       = var.enable_alb ? module.alb[0].target_group_arn : null
 }
