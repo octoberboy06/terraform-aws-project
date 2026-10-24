@@ -20,12 +20,24 @@ module "subnet" {
 
 }
 
+module "nat" {
+  count  = var.enable_nat ? 1 : 0
+  source = "../../modules/nat"
+
+  public_subnet_id = module.subnet.subnet_ids["public-a"]
+
+  project_name = var.project_name
+  environment  = var.environment
+}
+
 
 module "routing" {
   source = "../../modules/routing"
 
   vpc_id              = module.vpc.vpc_id
   internet_gateway_id = module.vpc.internet_gateway_id
+
+  nat_gateway_id = var.enable_nat ? module.nat[0].nat_gateway_id : null
 
   public_subnet_ids = {
     public-a = module.subnet.subnet_ids["public-a"]
@@ -142,7 +154,7 @@ module "app_launch_template" {
 
   iam_instance_profile_name = module.iam.ec2_instance_profile_name
 
-  user_data = file("${path.module}/user-data.sh")
+  user_data = replace(file("${path.module}/user-data.sh"), "\r\n", "\n")
 }
 
 

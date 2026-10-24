@@ -27,3 +27,9 @@ variable "environment" {
   description = "Environment name"
   type        = string
 }
+
+variable "nat_gateway_id" {
+  description = "ID of the NAT Gateway for application subnet internet access"
+  type        = string
+  default     = null
+}
