@@ -23,6 +23,14 @@ resource "aws_route_table" "app" {
   }
 }
 
+resource "aws_route" "app_internet" {
+  count = var.nat_gateway_id != null ? 1 : 0
+
+  route_table_id         = aws_route_table.app.id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = var.nat_gateway_id
+}
+
 resource "aws_route_table" "db" {
   vpc_id = var.vpc_id
 
@@ -53,3 +61,4 @@ resource "aws_route_table_association" "db" {
   subnet_id      = each.value
   route_table_id = aws_route_table.db.id
 }
+

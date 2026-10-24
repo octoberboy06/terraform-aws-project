@@ -55,3 +55,9 @@ variable "app_max_size" {
   type    = number
   default = 2
 }
+
+variable "enable_nat" {
+  description = "Controls whether the NAT Gateway is created"
+  type        = bool
+  default     = false
+}
