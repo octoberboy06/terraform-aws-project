@@ -24,7 +24,7 @@ resource "aws_route_table" "app" {
 }
 
 resource "aws_route" "app_internet" {
-  count = var.nat_gateway_id != null ? 1 : 0
+  count = var.enable_nat ? 1 : 0
 
   route_table_id         = aws_route_table.app.id
   destination_cidr_block = "0.0.0.0/0"

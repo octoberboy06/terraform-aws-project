@@ -33,3 +33,9 @@ variable "nat_gateway_id" {
   type        = string
   default     = null
 }
+
+variable "enable_nat" {
+  description = "Controls whether the application internet route through NAT is created"
+  type        = bool
+  default     = false
+}
