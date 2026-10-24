@@ -45,8 +45,10 @@ subnets = {
 
 app_instance_type = "t3.micro"
 
-app_min_size         = 0
-app_desired_capacity = 0
+app_min_size         = 1
+app_desired_capacity = 1
 app_max_size         = 2
 
-enable_nat = false
+enable_alb = true
+
+enable_nat = true

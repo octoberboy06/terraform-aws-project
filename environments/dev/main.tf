@@ -37,6 +37,7 @@ module "routing" {
   vpc_id              = module.vpc.vpc_id
   internet_gateway_id = module.vpc.internet_gateway_id
 
+  enable_nat     = var.enable_nat
   nat_gateway_id = var.enable_nat ? module.nat[0].nat_gateway_id : null
 
   public_subnet_ids = {
@@ -161,6 +162,8 @@ module "app_launch_template" {
 # Auto Scaling Group for application servers
 module "app_autoscaling" {
   source = "../../modules/autoscaling"
+
+  depends_on = [module.routing]
 
   name = "${var.project_name}-${var.environment}-app-asg"
 
