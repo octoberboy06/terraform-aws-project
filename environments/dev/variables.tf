@@ -34,3 +34,24 @@ variable "enable_alb" {
   type        = bool
   default     = false
 }
+
+variable "app_instance_type" {
+  description = "Instance type for application servers"
+  type        = string
+  default     = "t3.micro"
+}
+
+variable "app_min_size" {
+  type    = number
+  default = 0
+}
+
+variable "app_desired_capacity" {
+  type    = number
+  default = 0
+}
+
+variable "app_max_size" {
+  type    = number
+  default = 2
+}

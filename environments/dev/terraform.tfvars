@@ -43,4 +43,8 @@ subnets = {
 }
 
 
- 
+app_instance_type = "t3.micro"
+
+app_min_size         = 0
+app_desired_capacity = 0
+app_max_size         = 2
