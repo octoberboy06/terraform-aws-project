@@ -23,16 +23,28 @@ AZ=$(curl -s \
 
 HOSTNAME=$(hostname)
 
+# Create Cloud Operations Center webpage
 cat > /usr/share/nginx/html/index.html <<EOF
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Shubham's Cloud Operations Center</title>
 
     <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
             background: #0b1120;
             color: white;
             text-align: center;
@@ -42,23 +54,29 @@ cat > /usr/share/nginx/html/index.html <<EOF
             padding: 45px 20px 20px;
         }
 
+        .cloud {
+            font-size: 55px;
+            margin-bottom: 10px;
+        }
+
         h1 {
             font-size: 42px;
-            margin-bottom: 10px;
+            margin: 10px 0;
         }
 
         .subtitle {
             color: #94a3b8;
             font-size: 18px;
+            margin-top: 10px;
         }
 
         .status {
             display: inline-block;
             margin: 25px;
-            padding: 10px 22px;
+            padding: 12px 24px;
             background: #064e3b;
             color: #6ee7b7;
-            border-radius: 20px;
+            border-radius: 25px;
             font-weight: bold;
         }
 
@@ -85,7 +103,13 @@ cat > /usr/share/nginx/html/index.html <<EOF
 
         .card h3 {
             color: #38bdf8;
+            margin-top: 0;
             margin-bottom: 8px;
+        }
+
+        .card p {
+            margin-bottom: 0;
+            font-size: 17px;
         }
 
         .server {
@@ -98,11 +122,18 @@ cat > /usr/share/nginx/html/index.html <<EOF
 
         .server h2 {
             color: #38bdf8;
+            margin-top: 0;
         }
 
         .details {
-            line-height: 2;
+            line-height: 2.2;
             font-size: 17px;
+        }
+
+        .value {
+            color: #6ee7b7;
+            font-family: monospace;
+            font-size: 16px;
         }
 
         .footer {
@@ -111,98 +142,103 @@ cat > /usr/share/nginx/html/index.html <<EOF
             color: #64748b;
         }
 
-        .cloud {
-            font-size: 55px;
+        .footer-tech {
+            color: #94a3b8;
         }
+
     </style>
+
 </head>
 
 <body>
 
-<div class="header">
+    <div class="header">
 
-    <div class="cloud">☁</div>
+        <div class="cloud">&#9729;</div>
 
-    <h1>Shubham's Cloud Operations Center</h1>
+        <h1>Shubham's Cloud Operations Center</h1>
 
-    <div class="subtitle">
-        Powered by Terraform & AWS
-    </div>
-
-    <div class="status">
-        ● ALL SYSTEMS OPERATIONAL
-    </div>
-
-</div>
-
-
-<div class="container">
-
-    <div class="cards">
-
-        <div class="card">
-            <h3>AWS Region</h3>
-            <p>ap-south-1</p>
+        <div class="subtitle">
+            Powered by Terraform &amp; AWS
         </div>
 
-        <div class="card">
-            <h3>Environment</h3>
-            <p>DEV</p>
-        </div>
-
-        <div class="card">
-            <h3>Web Server</h3>
-            <p>NGINX</p>
+        <div class="status">
+            &#9679; ALL SYSTEMS OPERATIONAL
         </div>
 
     </div>
 
 
-    <div class="server">
+    <div class="container">
 
-        <h2>🚀 Request Served By</h2>
+        <div class="cards">
 
-        <div class="details">
+            <div class="card">
+                <h3>AWS Region</h3>
+                <p>ap-south-1</p>
+            </div>
 
-            <strong>Instance ID:</strong>
-            $INSTANCE_ID
+            <div class="card">
+                <h3>Environment</h3>
+                <p>DEV</p>
+            </div>
 
-            <br>
+            <div class="card">
+                <h3>Web Server</h3>
+                <p>NGINX</p>
+            </div>
 
-            <strong>Private IP:</strong>
-            $PRIVATE_IP
+        </div>
 
-            <br>
 
-            <strong>Availability Zone:</strong>
-            $AZ
+        <div class="server">
 
-            <br>
+            <h2>&#128640; Request Served By</h2>
 
-            <strong>Hostname:</strong>
-            $HOSTNAME
+            <div class="details">
+
+                <strong>Instance ID:</strong>
+                <span class="value">$INSTANCE_ID</span>
+
+                <br>
+
+                <strong>Private IP:</strong>
+                <span class="value">$PRIVATE_IP</span>
+
+                <br>
+
+                <strong>Availability Zone:</strong>
+                <span class="value">$AZ</span>
+
+                <br>
+
+                <strong>Hostname:</strong>
+                <span class="value">$HOSTNAME</span>
+
+            </div>
 
         </div>
 
     </div>
 
-</div>
 
+    <div class="footer">
 
-<div class="footer">
+        <div class="footer-tech">
+            Terraform &bull; AWS &bull; Auto Scaling &bull; ALB &bull; GitHub Actions
+        </div>
 
-    Terraform • AWS • Auto Scaling • ALB • GitHub Actions
+        <br>
 
-    <br><br>
+        Built by Shubham &#9729;
 
-    Built by Shubham ☁
-
-</div>
+    </div>
 
 </body>
+
 </html>
 EOF
 
-
+# Enable and start NGINX
 systemctl enable nginx
 systemctl start nginx
