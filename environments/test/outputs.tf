@@ -12,3 +12,13 @@ output "internet_gateway_id" {
   description = "ID of the Test Internet Gateway"
   value       = module.vpc.internet_gateway_id
 }
+
+output "subnet_ids" {
+  description = "IDs of the Test environment subnets"
+  value       = module.subnet.subnet_ids
+}
+
+output "subnet_availability_zones" {
+  description = "Availability Zones of the Test environment subnets"
+  value       = module.subnet.subnet_availability_zones
+}

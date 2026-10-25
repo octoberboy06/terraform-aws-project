@@ -10,3 +10,11 @@ module "vpc" {
     ManagedBy   = "Terraform"
   }
 }
+
+module "subnet" {
+  source = "../../modules/subnet"
+
+  vpc_id      = module.vpc.vpc_id
+  environment = var.environment
+  subnets     = var.subnets
+}
