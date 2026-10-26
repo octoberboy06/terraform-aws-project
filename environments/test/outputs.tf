@@ -32,3 +32,8 @@ output "private_route_table_id" {
   description = "ID of the Test private route table"
   value       = module.routing.private_route_table_id
 }
+
+output "nat_gateway_id" {
+  description = "ID of the Test NAT Gateway"
+  value       = module.nat.nat_gateway_id
+}
