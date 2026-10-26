@@ -22,3 +22,13 @@ output "subnet_availability_zones" {
   description = "Availability Zones of the Test environment subnets"
   value       = module.subnet.subnet_availability_zones
 }
+
+output "public_route_table_id" {
+  description = "ID of the Test public route table"
+  value       = module.routing.public_route_table_id
+}
+
+output "private_route_table_id" {
+  description = "ID of the Test private route table"
+  value       = module.routing.private_route_table_id
+}

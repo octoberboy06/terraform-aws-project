@@ -11,16 +11,25 @@ variable "internet_gateway_id" {
 variable "public_subnet_ids" {
   description = "IDs of the public subnets"
   type        = map(string)
+  default     = {}
+}
+
+variable "private_subnet_ids" {
+  description = "IDs of the private subnets"
+  type        = map(string)
+  default     = {}
 }
 
 variable "app_subnet_ids" {
   description = "IDs of the application subnets"
   type        = map(string)
+  default     = {}
 }
 
 variable "db_subnet_ids" {
   description = "IDs of the database subnets"
   type        = map(string)
+  default     = {}
 }
 
 variable "environment" {
@@ -29,13 +38,13 @@ variable "environment" {
 }
 
 variable "nat_gateway_id" {
-  description = "ID of the NAT Gateway for application subnet internet access"
+  description = "ID of the NAT Gateway for private subnet internet access"
   type        = string
   default     = null
 }
 
 variable "enable_nat" {
-  description = "Controls whether the application internet route through NAT is created"
+  description = "Controls whether internet access through NAT is created"
   type        = bool
   default     = false
 }
