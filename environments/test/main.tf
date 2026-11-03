@@ -19,11 +19,23 @@ module "subnet" {
   subnets     = var.subnets
 }
 
+module "nat" {
+  source = "../../modules/nat"
+
+  public_subnet_id = module.subnet.subnet_ids["public-a"]
+
+  project_name = var.project_name
+  environment  = var.environment
+}
+
 module "routing" {
   source = "../../modules/routing"
 
   vpc_id              = module.vpc.vpc_id
   internet_gateway_id = module.vpc.internet_gateway_id
+
+  enable_nat     = true
+  nat_gateway_id = module.nat.nat_gateway_id
 
   public_subnet_ids = {
     public-a = module.subnet.subnet_ids["public-a"]
@@ -36,4 +48,11 @@ module "routing" {
   }
 
   environment = var.environment
+}
+
+module "eks_iam" {
+  source = "../../modules/eks-iam"
+
+  project_name = var.project_name
+  environment  = var.environment
 }

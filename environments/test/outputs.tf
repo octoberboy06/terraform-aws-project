@@ -32,3 +32,18 @@ output "private_route_table_id" {
   description = "ID of the Test private route table"
   value       = module.routing.private_route_table_id
 }
+
+output "eks_cluster_role_arn" {
+  description = "ARN of the Test EKS cluster IAM role"
+  value       = module.eks_iam.cluster_role_arn
+}
+
+output "eks_node_role_arn" {
+  description = "ARN of the Test EKS worker node IAM role"
+  value       = module.eks_iam.node_role_arn
+}
+
+output "nat_gateway_id" {
+  description = "ID of the Test NAT Gateway"
+  value       = module.nat.nat_gateway_id
+}
