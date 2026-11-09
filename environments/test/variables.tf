@@ -29,3 +29,7 @@ variable "subnets" {
   }))
 }
 
+variable "public_access_cidrs" {
+  description = "Public IP CIDRs allowed to access the EKS API"
+  type        = list(string)
+}

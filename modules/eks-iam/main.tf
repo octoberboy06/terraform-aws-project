@@ -60,3 +60,38 @@ resource "aws_iam_role_policy_attachment" "ecr_pull_policy" {
   role       = aws_iam_role.eks_node.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPullOnly"
 }
+
+# Trust policy for EKS Pod Identity
+data "aws_iam_policy_document" "eks_cni_assume_role" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["pods.eks.amazonaws.com"]
+    }
+
+    actions = [
+      "sts:AssumeRole",
+      "sts:TagSession"
+    ]
+  }
+}
+
+# IAM role for Amazon VPC CNI
+resource "aws_iam_role" "eks_cni" {
+  name               = "${var.project_name}-${var.environment}-eks-cni-role"
+  assume_role_policy = data.aws_iam_policy_document.eks_cni_assume_role.json
+
+  tags = {
+    Project     = var.project_name
+    Environment = var.environment
+    ManagedBy   = "Terraform"
+  }
+}
+
+# Permissions required by Amazon VPC CNI
+resource "aws_iam_role_policy_attachment" "eks_cni_policy" {
+  role       = aws_iam_role.eks_cni.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+}

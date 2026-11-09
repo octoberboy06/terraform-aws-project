@@ -56,3 +56,88 @@ module "eks_iam" {
   project_name = var.project_name
   environment  = var.environment
 }
+
+module "eks" {
+  source = "../../modules/eks"
+
+  cluster_name     = "${var.project_name}-${var.environment}-eks"
+  cluster_role_arn = module.eks_iam.cluster_role_arn
+
+  subnet_ids = [
+    module.subnet.subnet_ids["private-a"],
+    module.subnet.subnet_ids["private-b"]
+  ]
+
+  public_access_cidrs = var.public_access_cidrs
+
+  kubernetes_version = "1.37"
+  project_name       = var.project_name
+  environment        = var.environment
+
+  depends_on = [
+    module.eks_iam
+  ]
+}
+
+module "eks_node_group" {
+  source = "../../modules/eks-node-group"
+
+  cluster_name    = module.eks.cluster_name
+  node_group_name = "${var.project_name}-${var.environment}-node-group"
+  node_role_arn   = module.eks_iam.node_role_arn
+
+  subnet_ids = [
+    module.subnet.subnet_ids["private-a"],
+    module.subnet.subnet_ids["private-b"]
+  ]
+
+  instance_types = ["t3.medium"]
+
+  desired_size = 1
+  min_size     = 1
+  max_size     = 2
+
+  project_name = var.project_name
+  environment  = var.environment
+
+  depends_on = [
+    module.eks,
+    module.eks_addons
+  ]
+}
+
+
+module "eks_addons" {
+  source = "../../modules/eks-addons"
+
+  cluster_name = module.eks.cluster_name
+
+  pod_identity_agent_version = "v1.4.1-eksbuild.3"
+  vpc_cni_version            = "v1.23.2-eksbuild.8"
+
+  cni_role_arn = module.eks_iam.cni_role_arn
+
+  project_name = var.project_name
+  environment  = var.environment
+
+  depends_on = [
+    module.eks,
+    module.eks_iam
+  ]
+}
+
+module "eks_core_addons" {
+  source = "../../modules/eks-core-addons"
+
+  cluster_name = module.eks.cluster_name
+
+  coredns_version    = "v1.14.7-eksbuild.22"
+  kube_proxy_version = "v1.37.0-eksbuild.32"
+
+  project_name = var.project_name
+  environment  = var.environment
+
+  depends_on = [
+    module.eks_node_group
+  ]
+}
