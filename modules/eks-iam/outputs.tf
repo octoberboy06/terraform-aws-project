@@ -3,17 +3,12 @@ output "cluster_role_arn" {
   value       = aws_iam_role.eks_cluster.arn
 }
 
-output "cluster_role_name" {
-  description = "Name of the EKS cluster IAM role"
-  value       = aws_iam_role.eks_cluster.name
-}
-
 output "node_role_arn" {
-  description = "ARN of the EKS worker node IAM role"
+  description = "ARN of the EKS node IAM role"
   value       = aws_iam_role.eks_node.arn
 }
 
-output "node_role_name" {
-  description = "Name of the EKS worker node IAM role"
-  value       = aws_iam_role.eks_node.name
+output "cni_role_arn" {
+  description = "ARN of the EKS CNI IAM role"
+  value       = aws_iam_role.eks_cni.arn
 }
