@@ -2,7 +2,7 @@ aws_region          = "ap-south-1"
 project_name        = "terraform-project"
 environment         = "test"
 vpc_cidr            = "10.1.0.0/16"
-public_access_cidrs = ["49.207.216.126/32"]
+public_access_cidrs = ["49.207.215.125/32"]
 
 subnets = {
   public-a = {
