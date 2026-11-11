@@ -91,7 +91,7 @@ module "eks_node_group" {
     module.subnet.subnet_ids["private-b"]
   ]
 
-  instance_types = ["t3.medium"]
+  instance_types = ["t3.small"]
 
   desired_size = 1
   min_size     = 1
